@@ -1,0 +1,11 @@
+@import url(../image/big-image_close.css);
+
+.image{
+    position: relative;
+    margin: auto;
+    max-width: 80vw;
+    max-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
