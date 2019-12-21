@@ -12,11 +12,16 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
     useFindAndModify: false,
 });
 
-const User = require('./models/user.js');
-router.post('/', (req, res) => {
-  const { name, about, avatar } = req.body;
-  User.create({ name, about, avatar });
+const usercreate = require('./models/user.js');
+app.post('/users', (req, res) => {
+
+  const { name, about, avatar } = req.params;
+  usercreate.create({ name, about, avatar });
+  console.log({ name, about, avatar });
+
 });
+
+
 
 
 const { PORT = 3000 } = process.env;
