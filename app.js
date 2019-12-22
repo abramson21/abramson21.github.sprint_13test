@@ -6,20 +6,28 @@ const mongoose = require('mongoose');
 const router = require('express').Router();
 const app = express();
 
+
+
 mongoose.connect('mongodb://localhost:27017/mestodb', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
+    useUnifiedTopology: true
 });
 
 const usercreate = require('./models/user.js');
+
 app.post('/users', (req, res) => {
-
   const { name, about, avatar } = req.params;
-  usercreate.create({ name, about, avatar });
-  console.log({ name, about, avatar });
-
+  console.log('Что-то пошло');
+  console.log({name, about, avatar});
+  usercreate.create({name, about, avatar})
+    .then(usercreate => res.send({ data: usercreate }))
+    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+    console.log({name, about, avatar});
 });
+
+
 
 
 
