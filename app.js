@@ -5,7 +5,11 @@ const cards = require('./routes/cards.js');
 const mongoose = require('mongoose');
 const router = require('express').Router();
 const app = express();
+const bodyParser = require('body-parser');
 
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
@@ -15,26 +19,11 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
     useUnifiedTopology: true
 });
 
-const usercreate = require('./models/user.js');
-
-app.post('/users', (req, res) => {
-  const { name, about, avatar } = req.params;
-  console.log('Что-то пошло');
-  console.log({name, about, avatar});
-  usercreate.create({name, about, avatar})
-    .then(usercreate => res.send({ data: usercreate }))
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
-    console.log({name, about, avatar});
-});
-
-
-
-
-
 
 const { PORT = 3000 } = process.env;
 
 app.use(express.static(path.join(__dirname, '/public/dist')));
+app.use('/',users);
 app.use('/', users);
 app.use('/', cards);
 app.listen(PORT, () => {});
